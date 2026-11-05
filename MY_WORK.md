@@ -298,20 +298,36 @@
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+In the original starter the number of completed processes was 16 instead of 18. The problem can happen without RaceWindow.pause() because count++ is 3 operations but appears as 1 operation. It is difficult to detect because it does not give error.
 
 Verification block of the **original starter**:
 ```
-[Paste the verification block (or the exception/watchdog message) of the starter here]
+═══ VERIFICATION (expected values are computed from YOUR seed) ═══
+  Context switches (quanta executed)     expected 36       observed 33       ✘ MISMATCH
+  Completed processes                    expected 18       observed 16       ✘ MISMATCH
+  Total service time (ms)                expected 132729   observed 121383   ✘ MISMATCH
+  Busy-waiting polls (must be 0)         expected 0        observed 495      ✘ MISMATCH
+  ✘ At least one check failed (see the ✘ lines above): a race condition or busy waiting is still present.
 ```
 
 Verification block of **my final version**:
 ```
-[Paste the verification block of your final version here (all lines ✔)]
+═══ VERIFICATION (expected values are computed from YOUR seed) ═══
+  Context switches (quanta executed)     expected 36       observed 36       ✔
+  Completed processes                    expected 18       observed 18       ✔
+  Total service time (ms)                expected 132729   observed 132729   ✔
+  Busy-waiting polls (must be 0)         expected 0        observed 0        ✔
+  ✔ All shared values are consistent.
 ```
 
 **Explanation of the timeline:**
-[Explain the lost update step by step.]
+1. CPU-1 reads 5
+2. CPU-1 pauses in RaceWindow.pause()
+3. CPU-2 reads 5
+4. CPU-1 writes 6
+5. CPU-2 writes 6
+6. the result is 6 instead of 7 , one update is lost. 
+
 
 ## Question 2: Critical Sections and Lock Granularity
 
@@ -321,12 +337,18 @@ Verification block of **my final version**:
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+I use one lock (statsLock) for three functions, the lock makes one thread inside mutual exclusion, finally the others can progress. The disadvantege is a thread can wait even though two varible are independent. The ReadyQueue has a different lock to keep them independent and to avoid deadlock. The defult ReentrantLock is not fair, it can cause starvation then the bounded waiting is not trusted.
 
 | Critical section (variable / method) | Lock used | Why it needs protection |
 |---|---|---|
-| [e.g., `ReadyQueue.poll()`] | [lock name] | [reason] |
-| [...] | [...] | [...] |
+| ReadyQueue.add() | lock | to prevent race condition e.g. process lost |
+| ReadyQueue.poll() | lock | the same process run twice on two CPUs |
+| ReadyQueue.processOf() | lock | the read while another thread modifies gives wrong result |
+| ReadyQueue.snapshot() | lock | the read while another thread modifies gives wrong result |
+| SharedStats.incrementContextSwitch() | statsLock | to prevent race condition e.g. one update is lost |
+| SharedStats.incrementCompletedProcess() | statsLock | to prevent race condition e.g. one update is lost |
+| SharedStats.addServiceTime() | statsLock | to prevent race condition e.g. one update is lost |
+| SharedStats getter (3 methods) | statsLock | to prevent race condition e.g. reading wrong value |
 
 ## Question 3: Busy Waiting vs Semaphore
 
@@ -336,7 +358,7 @@ Verification block of **my final version**:
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+The busy waiting on CPU when the queue is empty keeps checking useleesly instead of sleeping, and it appears in output polling 495 times. The semaphore initial value 0 that represents number of processes ready, after initial add() the value is 18. The CPU in my code is blocked, waiting in acquire() not running or ready. The release(total CPUs) wakes up every CPU sleeping and if they donot wakes up the program cannot finish ever.
 
 ## Question 4: Classical Problems and Deadlock
 
@@ -347,24 +369,25 @@ Verification block of **my final version**:
 **Your Answer:** *(3-5 sentences)*
 
 **Classical problem and roles**:
-[Name the problem; who is the producer, who is the consumer?]
+Bounded Buffer - producer & consumer; The producer adds a process to queue with add() , and the consumer consumes a process and removes with poll(). The CPU plays both roles consumer to take process and producer to add.
 
 **Semaphores for a bounded queue (name and initial value)**:
-[Name the three semaphores and their initial values.]
+empty = K, full = 0, mutex = 1; The empty semaphore counts the empty slots. The full semaphore counts the filled slots. The mutex lets only one thread edit the queue at a time.
 
 **Deadlock scenario and prevention**:
-[Describe the scenario and the necessary condition you would break.]
+The queue is full and the producer has mutex and waits for empty, the consumer wants mutex to remove a process in queue. So both wait forever.
+I break condition Hold & Wait because the producer waits the semaphore before take the mutex.
 
 ## Summary
 
 **Key concepts I understood through these questions:**
-1.
-2.
-3.
+1. Race condition and lost update.
+2. Methods need lock e.g. add() , poll().
+3. Busy waiting vs semaphore.
 
 **Concepts I need to study more:**
-1.
-2.
+1. Difference between acquire() and release().
+2. Bounded waiting and fairness.
 
 ---
 
