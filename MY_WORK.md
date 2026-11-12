@@ -132,95 +132,105 @@
 
 ## Your Development Log
 
-### Entry 1 - [Date and Time]
-**What I did**:
+### Entry 1 - [October 28, 2026, 1:08 PM]
+**What I did**: implemented feature 1 and student ID.
 
 **Details**:
+- Update student ID to student ID 446051978.
+- Run orignal starter and found that the result were wrong.
+- i added ReentrantLock in ReadyQueue.
+- i protected add(),poll(),processOf(),snapshot() by lock(),unlock(), try , finally.
+- i committed Feature 1: protected the ready queue with a ReentrantLock.
 
-**Challenges**:
+**Challenges**: The starter give wrong values.
 
-**Solution**:
+**Solution**: Understand the code and why the starter give wrong values. then i solved it by adding lock.
 
-**Time spent**:
+**Time spent**: 2 hours.
 
 ---
 
-### Entry 2 - [Date and Time]
-**What I did**:
+### Entry 2 - [October 30, 2026, 12:19 AM]
+**What I did**: Implemented feature 2 locks for sharead statistics.
 
-**Details**:
+**Details**: 
+- add statsLock for the three shared counters.
+- protected incrementContextSwitch(), incrementCompletedProcess(), addServiceTime().
+- protected 3 getters.
+- i committed Feature 2: Added locks to shared statistics counters.
 
-**Challenges**:
+**Challenges**: Understanding how the lock and try, finally work.
 
-**Solution**:
+**Solution**: i put unlock() inside finally so the lock is always released even if error happens in protected code.
 
-**Time spent**:
-
----
-
-### Entry 3 - [Date and Time]
-**What I did**:
-
-**Details**:
-
-**Challenges**:
-
-**Solution**:
-
-**Time spent**:
+**Time spent**: 1.5 hours.
 
 ---
 
-### Entry 4 - [Date and Time]
-**What I did**:
+### Entry 3 - [October 31, 2026, 2:08 PM]
+**What I did**: Implemented feature 3, replaced busy waiting with a semaphore.
 
 **Details**:
+- removed the polling code in CpuWorker.
+- added a semaphore with initial value 0;
+- used release() in add() and acquire() in run().
+- the last CPU calls release(totalCPUs) to wakeup other CPUs.
+- committed Feature 3: Replaced busy waiting with counting semaphore.
 
-**Challenges**:
+**Challenges**: the initial value of semaphore and shutdown.
 
-**Solution**:
+**Solution**: initial values is 0 because the queue is empty at the start. The last CPU calls release(totalCPUs) so the sleeping CPUs wakeup.
 
-**Time spent**:
+**Time spent**: 2 hours.
 
 ---
 
-### Entry 5 - [Date and Time]
-**What I did**:
+### Entry 4 - [November 5, 2026, 2:07 PM]
+**What I did**: Filled my student information and ran the original starter.
 
 **Details**:
+- Wrote my name, ID and repository link in MY WORK.md.
+- Ran the original starter (commit b820b37) and saved the verification block.
+- Committed Docs: Student information.
 
-**Challenges**:
+**Challenges**: Understanding the output of the original starter.
 
-**Solution**:
+**Solution**: I found that the numbers were wrong and Busy-waiting polls was 495.
 
-**Time spent**:
+**Time spent**: 1 hour.
 
 ---
 
-### Entry 6 - [Optional - Date and Time]
-**What I did**:
+### Entry 5 - [November 5, 2026, 11:12 PM]
+**What I did**: wrote part C technical answers and summary.
 
 **Details**:
+- Pasted the verification blocks of the original starter and my final version.
+- Wrote the timeline of the lost update and the table of critical sections.
+- Answered questions about semaphores and deadlock.
+- Committed Docs: part C technical answers and
+summary.
 
-**Challenges**:
+**Challenges**: Part C had many questions and it took a long time to finish.
 
-**Solution**:
+**Solution**: I worked step by step and committed my work at the end.
 
-**Time spent**:
+**Time spent**: 3 hours.
 
 ---
+
 
 ## Development Log Summary
 
 > 💡 **TIP:** Fill this in **last**, after all entries are written.
 
-**Total time spent on assignment**: [X hours]
+**Total time spent on assignment**: 9.5 hours
 
-**Most challenging part**:
+**Most challenging part**: Finishing the documentation. It was not very difficult but it took a long time.
 
-**Most interesting learning**:
+**Most interesting learning**: Understanding how a lost update happens in the starter, because one small line like count++ is really three steps.
 
-**What I would do differently next time**:
+**What I would do differently next time**: I would write the development log at the end of each work session, not all at once at the end.
 
 ---
 
