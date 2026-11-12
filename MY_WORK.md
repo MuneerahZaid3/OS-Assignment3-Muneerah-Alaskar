@@ -189,7 +189,7 @@
 **What I did**: Filled my student information and ran the original starter.
 
 **Details**:
-- Wrote my name, ID and repository link in MY WORK.md.
+- Wrote my name, ID and repository link in MY_WORK.md.
 - Ran the original starter (commit b820b37) and saved the verification block.
 - Committed Docs: Student information.
 
@@ -208,8 +208,7 @@
 - Pasted the verification blocks of the original starter and my final version.
 - Wrote the timeline of the lost update and the table of critical sections.
 - Answered questions about semaphores and deadlock.
-- Committed Docs: part C technical answers and
-summary.
+- Committed Docs: part C technical answers and summary.
 
 **Challenges**: Part C had many questions and it took a long time to finish.
 
@@ -266,7 +265,7 @@ The most challenging part was understanding why the starter output wrong values 
 
 **Your Answer:** *(5-7 sentences)*
 
-I read the README and the slides to understand what the three features need and the race condition and critical section. i ran the original starter ones and compared the expected values with the observed values. after each feature i ran program and chacked the verification block. i used the verification block to chack if my soluition is correct. i wrote steps with numbers 5,6,7 to understand lost update.
+I read the README and the slides to understand what the three features need and the race condition and critical section. i ran the original starter once and compared the expected values with the observed values. after each feature i ran program and chacked the verification block. i used the verification block to chack if my soluition is correct. i wrote steps with numbers 5,6,7 to understand lost update.
 
 ## Question 4: Where can synchronization concepts be applied in real-world applications?
 
@@ -331,7 +330,7 @@ Verification block of **my final version**:
 ```
 
 **Explanation of the timeline:**
-1. CPU-1 reads 5
+1. CPU-1 reads completedProcessCount = 5
 2. CPU-1 pauses in RaceWindow.pause()
 3. CPU-2 reads 5
 4. CPU-1 writes 6
@@ -347,7 +346,7 @@ Verification block of **my final version**:
 
 **Your Answer:** *(3-5 sentences)*
 
-I use one lock (statsLock) for three functions, the lock makes one thread inside mutual exclusion, finally the others can progress. The disadvantege is a thread can wait even though two varible are independent. The ReadyQueue has a different lock to keep them independent and to avoid deadlock. The defult ReentrantLock is not fair, it can cause starvation then the bounded waiting is not trusted.
+I use one lock (statsLock) for three functions because it is simpler and no risk of deadlock between locks , the lock makes one thread inside mutual exclusion, finally the others can progress. The disadvantege is a thread can wait even though two varible are independent. The ReadyQueue has a different lock to keep them independent and to avoid deadlock. The defult ReentrantLock is not fair, it can cause starvation then the bounded waiting is not trusted.
 
 | Critical section (variable / method) | Lock used | Why it needs protection |
 |---|---|---|
@@ -368,7 +367,7 @@ I use one lock (statsLock) for three functions, the lock makes one thread inside
 
 **Your Answer:** *(3-5 sentences)*
 
-The busy waiting on CPU when the queue is empty keeps checking useleesly instead of sleeping, and it appears in output polling 495 times. The semaphore initial value 0 that represents number of processes ready, after initial add() the value is 18. The CPU in my code is blocked, waiting in acquire() not running or ready. The release(total CPUs) wakes up every CPU sleeping and if they donot wakes up the program cannot finish ever.
+The busy waiting on CPU when the queue is empty keeps checking useleesly instead of sleeping, and it appears in output polling 495 times. The semaphore initial value is 0 because the queue is empty at the start, and it represents number of processes ready, after initial add() the value is 18. The CPU in my code is blocked, waiting in acquire() not running or ready. The release(totalCPUs) wakes up every CPU sleeping and if they donot wakes up the program cannot finish ever.
 
 ## Question 4: Classical Problems and Deadlock
 
