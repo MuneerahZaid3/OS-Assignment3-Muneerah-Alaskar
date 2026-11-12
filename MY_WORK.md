@@ -250,7 +250,7 @@ summary.
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+I learned that count++ is three steps but appears in one step. the lock make only one thread accses critical section and another thread wait. in the original code the CPU chakes tha queue 495 times instead of sleeping until a process comes. the initial value is 0 because the queue is empty and last CPU wake up others with release(totalCPUs). the real problem is not give error just wrong values.
 
 ## Question 2: What was the most challenging part of this assignment?
 
@@ -258,7 +258,7 @@ summary.
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+The most challenging part was understanding why the starter output wrong values without error. it was hard because the error does not alwaes appear and there is no error massage and the numbers change every run. i ran the original starter and saw 33 instead of 36, 16 instead of 18. then i understand tha count++ is 3 steps and threds cause a race condition. after i added the lockes the verification is correct.
 
 ## Question 3: How did you overcome the challenges you faced?
 
@@ -266,7 +266,7 @@ summary.
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+I read the README and the slides to understand what the three features need and the race condition and critical section. i ran the original starter ones and compared the expected values with the observed values. after each feature i ran program and chacked the verification block. i used the verification block to chack if my soluition is correct. i wrote steps with numbers 5,6,7 to understand lost update.
 
 ## Question 4: Where can synchronization concepts be applied in real-world applications?
 
@@ -274,19 +274,19 @@ summary.
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+Synchronization is used when many threads share the same data. in a bank transfer balance is sheared data and a lock is needed to prevent a lost update. a website visitor counter is like count++ it appears as one step but it is 3 steps. a print queue is like my ReadyQueue because many printers take files from the same queue and each file is printed one time. in all these examples the lock protects the sheard data and semaphore counts the ready elements.
 
 ### Optional: What would you like to learn more about?
 
-[Any topics related to synchronization or operating systems that you're curious about?]
+I would like to learn more about deadlock and how to prevent it.
 
 ### Optional: How confident do you feel about synchronization concepts now?
 
-[Beginner / Intermediate / Confident. What do you understand well? What needs more practice?]
+Intermediate. I understand the lost update but i need more practice with acquire() and release() and fairness.
 
 ### Optional: Feedback on the assignment
 
-[Any comments? Was it helpful? Too easy or hard? Suggestions?]
+The assignment helped me understand locks and semaphores with a real example.
 
 ---
 
